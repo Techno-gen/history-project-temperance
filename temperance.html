@@ -24,6 +24,7 @@
     color: var(--ink);
     min-height: 100vh;
     padding: 24px;
+    overflow-x: hidden;
   }
 
   /* PAPER TEXTURE */
@@ -139,7 +140,7 @@
   }
 
   /* ========== SECTIONS ========== */
-  .section { display: none; padding: 28px 32px 40px; }
+  .section { display: none; padding: 28px 20px 40px; overflow-x: hidden; }
   .section.active { display: block; }
 
   /* DECORATIVE RULES */
@@ -305,6 +306,13 @@
     gap: 28px;
     margin-top: 24px;
     flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #crossword iframe {
+    max-width: 100%;
+    width: 100%;
+    height: 600px;
   }
 
   .cw-grid-container { flex: 1; min-width: 280px; overflow-x: auto; }
@@ -542,6 +550,28 @@
     border: 2px solid #fff;
   }
 
+  .associate-list {
+    list-style: none;
+    margin: 4px 0;
+    padding-left: 0;
+    font-size: 0.8rem;
+  }
+
+  .associate-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .associate-list li img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #fff;
+  }
+
   .insta-stats { display: flex; gap: 16px; }
   .insta-stat { text-align: center; }
   .insta-stat strong { display: block; font-size: 0.95rem; font-weight: 700; color: #262626; }
@@ -566,14 +596,42 @@
   .insta-post-thumb {
     aspect-ratio: 1;
     background: var(--dark-paper);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    transition: none;
   }
 
-  .insta-post-thumb svg { width: 100%; height: 100%; }
+  .insta-post-thumb:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .insta-post-thumb img,
+  .insta-post-thumb svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .insta-post-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.62));
+    color: #fff;
+    padding: 8px;
+    font-size: 0.68rem;
+    line-height: 1.15;
+    text-align: center;
+    font-family: 'IM Fell English SC', serif;
+    letter-spacing: 0.08em;
+  }
 
   .insta-post-detail {
     background: #fff;
@@ -673,7 +731,7 @@
   /* INTRO / FRONT PAGE */
   #home .front-columns {
     display: grid;
-    grid-template-columns: 1fr 2px 2fr 2px 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 20px;
   }
@@ -1080,21 +1138,7 @@
     <p class="section-deck">Test your knowledge — twelve terms from the cold water crusade</p>
 
     <div class="crossword-wrap">
-      <div class="cw-grid-container">
-        <table class="cw-grid" id="cwGrid"></table>
-        <div style="margin-top:12px;">
-          <button class="cw-btn" onclick="checkCrossword()">Check Answers</button>
-          <button class="cw-btn" onclick="revealCrossword()">Reveal All</button>
-          <button class="cw-btn" onclick="resetCrossword()">Reset</button>
-        </div>
-        <div class="cw-score" id="cwScore"></div>
-      </div>
-      <div class="clues-panel">
-        <h3>Across</h3>
-        <ul class="clue-list" id="acrossClues"></ul>
-        <h3>Down</h3>
-        <ul class="clue-list" id="downClues"></ul>
-      </div>
+      <iframe style="border:3px solid black; aspect-ratio: 1; min-height: 500px;" frameborder="0" src="https://crosswordlabs.com/embed/temperance-crossword-10"></iframe>
     </div>
   </div>
 
@@ -1109,64 +1153,57 @@
       <!-- CARTOON 1 -->
       <div class="cartoon-card">
         <div class="cartoon-img">
-          <svg class="cartoon-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <rect width="400" height="300" fill="#e8d5a8"/>
-            <!-- Background: Home scene -->
-            <rect x="0" y="180" width="400" height="120" fill="#c8a870"/>
-            <!-- House interior wall -->
-            <rect x="0" y="0" width="400" height="185" fill="#f0e0c0"/>
-            <!-- Window -->
-            <rect x="30" y="30" width="80" height="100" fill="#b8d4e8" stroke="#5a3a1a" stroke-width="3"/>
-            <line x1="70" y1="30" x2="70" y2="130" stroke="#5a3a1a" stroke-width="2"/>
-            <line x1="30" y1="80" x2="110" y2="80" stroke="#5a3a1a" stroke-width="2"/>
-            <!-- Crying woman and children on right -->
-            <ellipse cx="300" cy="110" rx="22" ry="28" fill="#f5d5b0" stroke="#5a3a1a" stroke-width="1.5"/>
-            <text x="300" y="105" text-anchor="middle" font-size="18">😢</text>
-            <rect x="280" y="135" width="40" height="55" fill="#8b4513" rx="3"/>
-            <!-- Children -->
-            <circle cx="250" cy="160" r="12" fill="#f5d5b0" stroke="#5a3a1a" stroke-width="1"/>
-            <text x="250" y="167" text-anchor="middle" font-size="10">😥</text>
-            <circle cx="335" cy="165" r="10" fill="#f5d5b0" stroke="#5a3a1a" stroke-width="1"/>
-            <text x="335" y="172" text-anchor="middle" font-size="8">😥</text>
-            <!-- Drunk man stumbling in left -->
-            <ellipse cx="130" cy="105" rx="20" ry="26" fill="#f5c090" stroke="#5a3a1a" stroke-width="1.5"/>
-            <text x="130" y="100" text-anchor="middle" font-size="17">😵</text>
-            <rect x="112" y="128" width="36" height="50" fill="#556b2f" rx="3"/>
-            <!-- Liquor bottle in hand -->
-            <rect x="148" y="118" width="10" height="28" fill="#8b7355" rx="3" stroke="#5a3a1a" stroke-width="1"/>
-            <rect x="150" y="112" width="6" height="10" fill="#8b7355" rx="2"/>
-            <!-- Broken items on floor -->
-            <text x="170" y="185" font-size="11" fill="#5a3a1a">💸 💔</text>
-            <!-- Caption -->
-            <text x="200" y="240" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#3a1a00">"The Drunkard's Home — Ruin Brought by the Demon Rum"</text>
-            <!-- Decorative border -->
-            <rect x="2" y="2" width="396" height="296" fill="none" stroke="#5a3a1a" stroke-width="3"/>
-            <rect x="6" y="6" width="388" height="288" fill="none" stroke="#5a3a1a" stroke-width="1"/>
-          </svg>
+          <img src="Cartoons/Temperance_man_wife_dbloc_c1884_dbloc_sized.gif" style="width: 100%; height: 100%; object-fit: contain;" alt="Cartoon 1">
         </div>
         <div class="cartoon-body">
-          <div class="cartoon-title">Cartoon I — "The Drunkard's Home" (c. 1846)</div>
-          <div class="analysis-row">
-            <div class="analysis-box">
-              <h5>🔍 Symbols Identified</h5>
-              <p>Liquor bottle = moral corruption; weeping woman = innocent victim; broken objects = domestic destruction; dark doorway = moral abyss</p>
-            </div>
-            <div class="analysis-box">
-              <h5>📣 Characters & Roles</h5>
-              <p>Staggering husband (villain / cautionary figure); suffering wife and children (sympathetic victims used to provoke emotion)</p>
-            </div>
-            <div class="analysis-box">
-              <h5>⚖️ Bias / Exaggeration</h5>
-              <p>Deliberately exaggerates poverty and anguish to maximize emotional impact; omits context of economic hardship or social conditions</p>
-            </div>
-            <div class="analysis-box">
-              <h5>🎨 Visual Techniques</h5>
-              <p>Dark vs. light contrast (sinister doorway vs. innocent domestic space); scale of man made imposing and threatening to family</p>
-            </div>
+          <div class="cartoon-title">Cartoon I - Analysis</div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>1. List the objects or people you see in the cartoon.</h5>
+            <p>A man attacked his wife and his child, with a broken chair and tables on the ground.</p>
           </div>
-          <div class="analysis-meaning">
-            <strong>Overall Propaganda Meaning:</strong>
-            This cartoon functions as a morality tale aimed at middle-class Protestant audiences. By centering the suffering of women and children, it casts temperance not merely as personal virtue but as <em>protection of the family</em> — the sacred unit of American society. The drunkard is not portrayed as sick but as a <em>moral agent choosing destruction</em>, making the audience's sympathy entirely with the family and their demand for prohibition.
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>2. Identify the cartoon caption and/or title.</h5>
+            <p>"Through the constant use of liquor he loses, at times all control of himself and in one of these moments kills his wife."</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>3. Locate three words or phrases used by the cartoonist to identify objects or people within the cartoon.</h5>
+            <p><strong>1.</strong> "Constant use of liquor"<br><strong>2.</strong> "Loses all control"<br><strong>3.</strong> "Kills his wife"</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>4. Record any important dates or numbers that appear in the cartoon.</h5>
+            <p>It has a stamp of January 26 1885, but doesn't have much meaning to the cartoon.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>5. Which of the objects on your list are symbols?</h5>
+            <p>Liquor bottles, Broken Furniture, Violent Husband</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>6. What do you think each symbol means?</h5>
+            <p><strong>Liquor bottles:</strong> addiction<br><strong>Broken Furniture:</strong> chaos and destruction<br><strong>Violent Husband:</strong> harm and consequences due to alcohol</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>7. Which words or phrases in the cartoon appear to be the most significant? Why do you think so?</h5>
+            <p>"Losses control" and "kills his wife" are the most significant since it really shows the consequences of alcohol.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>8. List adjectives that describe the emotions portrayed in the cartoon.</h5>
+            <p>Violent, Fearful, Chaotic, Tragic</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>A. Describe the action taking place in the cartoon.</h5>
+            <p>A man violently attacks his wife while the child is trying to stop him.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>B. Explain how the words in the cartoon clarify the symbols.</h5>
+            <p>The caption explains the violence caused by alcohol.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>C. Explain the message of the cartoon.</h5>
+            <p>Alcohol leads to loss of self-control and how alcohol leads to violence.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>D. What special interest groups would agree/disagree with the cartoon's message? Why?</h5>
+            <p><strong>Agree:</strong> Temperance activists would agree since they are against the use of alcohol.<br><strong>Disagree:</strong> Alcohol companies and bar owners would disagree since they are the ones who profit from the alcohol selling.</p>
           </div>
         </div>
       </div>
@@ -1174,66 +1211,57 @@
       <!-- CARTOON 2 -->
       <div class="cartoon-card">
         <div class="cartoon-img">
-          <svg class="cartoon-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <rect width="400" height="300" fill="#e8d5a8"/>
-            <!-- Uncle Sam figure -->
-            <rect x="0" y="0" width="400" height="300" fill="#f0e0c0"/>
-            <!-- Giant bottle as monster -->
-            <rect x="155" y="40" width="90" height="180" fill="#7a9a40" rx="15" stroke="#3a5a10" stroke-width="3"/>
-            <rect x="170" y="20" width="60" height="30" fill="#7a9a40" rx="5" stroke="#3a5a10" stroke-width="2"/>
-            <rect x="178" y="10" width="44" height="18" fill="#5a7a30" rx="4"/>
-            <!-- Monster face on bottle -->
-            <circle cx="185" cy="100" r="8" fill="#ff4444"/>
-            <circle cx="215" cy="100" r="8" fill="#ff4444"/>
-            <path d="M 175 130 Q 200 155 225 130" fill="none" stroke="#3a5a10" stroke-width="3"/>
-            <!-- Chains from bottle to small figures -->
-            <line x1="155" y1="180" x2="70" y2="220" stroke="#8b6914" stroke-width="3"/>
-            <line x1="245" y1="180" x2="330" y2="220" stroke="#8b6914" stroke-width="3"/>
-            <!-- Chained small figure left (worker) -->
-            <circle cx="55" cy="215" r="15" fill="#f5c090" stroke="#5a3a1a" stroke-width="1.5"/>
-            <text x="55" y="222" text-anchor="middle" font-size="13">😰</text>
-            <text x="55" y="245" text-anchor="middle" font-size="9" fill="#5a3a1a">WORKER</text>
-            <!-- Chained small figure right (voter) -->
-            <circle cx="345" cy="215" r="15" fill="#f5c090" stroke="#5a3a1a" stroke-width="1.5"/>
-            <text x="345" y="222" text-anchor="middle" font-size="13">😰</text>
-            <text x="345" y="245" text-anchor="middle" font-size="9" fill="#5a3a1a">VOTER</text>
-            <!-- Small Uncle Sam figure in corner holding hatchet -->
-            <rect x="15" y="40" width="55" height="80" fill="#3333cc" rx="3"/>
-            <circle cx="42" cy="30" r="14" fill="#f5c090" stroke="#5a3a1a" stroke-width="1"/>
-            <text x="42" y="37" text-anchor="middle" font-size="12">💪</text>
-            <rect x="58" y="60" width="22" height="8" fill="#8b7355" rx="2"/>
-            <polygon points="78,54 85,64 78,74" fill="#c0c0c0"/>
-            <text x="10" y="140" font-size="7" fill="#3a1a00" font-style="italic">"TEMPERANCE</text>
-            <text x="10" y="152" font-size="7" fill="#3a1a00" font-style="italic">CRUSADER"</text>
-            <!-- Caption -->
-            <text x="200" y="275" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#3a1a00">"King Alcohol and His Slaves — Break the Chains!"</text>
-            <rect x="2" y="2" width="396" height="296" fill="none" stroke="#5a3a1a" stroke-width="3"/>
-            <rect x="6" y="6" width="388" height="288" fill="none" stroke="#5a3a1a" stroke-width="1"/>
-          </svg>
+          <img src="Cartoons/politicalcartoon1.jpg" style="width: 100%; height: 100%; object-fit: contain;" alt="Cartoon 2">
         </div>
         <div class="cartoon-body">
-          <div class="cartoon-title">Cartoon II — "King Alcohol and His Slaves" (c. 1850)</div>
-          <div class="analysis-row">
-            <div class="analysis-box">
-              <h5>🔍 Symbols Identified</h5>
-              <p>Giant bottle crowned as king = tyrannical power of alcohol; chains = addiction and social enslavement; crusader figure = righteous liberation</p>
-            </div>
-            <div class="analysis-box">
-              <h5>📣 Characters & Roles</h5>
-              <p>"King Alcohol" as monstrous oppressor; chained workers as victims of addiction; temperance figure as a revolutionary liberator</p>
-            </div>
-            <div class="analysis-box">
-              <h5>⚖️ Bias / Exaggeration</h5>
-              <p>Frames drinking as literal enslavement — a provocative parallel to the abolitionist movement; portrays all alcohol drinkers as helpless victims</p>
-            </div>
-            <div class="analysis-box">
-              <h5>🎨 Visual Techniques</h5>
-              <p>Scale exaggeration (giant bottle dwarfs humans); monster facial features on inanimate object; contrast between enslaved and the heroic crusader</p>
-            </div>
+          <div class="cartoon-title">Cartoon II - "Which is Worst" - Analysis</div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>1. List the objects or people you see in the cartoon.</h5>
+            <p>In the left panel of the cartoon we see a robber point a gun at a man that is kneeling down. At the right panel we see a man at the bar and the bartender is giving him a drink.</p>
           </div>
-          <div class="analysis-meaning">
-            <strong>Overall Propaganda Meaning:</strong>
-            By depicting "King Alcohol" as a literal tyrant with chains, this cartoon deliberately borrows the moral vocabulary of the anti-slavery movement, suggesting that drinking is a form of <em>bondage from which Americans must be freed</em>. This appealed powerfully to northern Protestant audiences already sensitized to abolition rhetoric. The temperance crusader rendered as a liberating hero positions legislation not as government intrusion but as an <em>act of national liberation</em>.
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>2. Identify the cartoon caption and/or title.</h5>
+            <p>The title of the political cartoon is "Which is Worst."</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>3. Locate three words or phrases used by the cartoonist to identify objects or people within the cartoon.</h5>
+            <p><strong>1.</strong> "Deliver or Die" at the left panel which shows a guy kneeled down by gunpoint.<br><strong>2.</strong> "Deliver and Die" at the right panel shows a guy at a bar, drinking alcohol which will lead to his death.<br><strong>3.</strong> "Which is the Worst" as the lead title, saying that drinking is as bad as getting robbed with a gun.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>4. Record any important dates or numbers that appear in the cartoon.</h5>
+            <p>No important dates mentioned.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>5. Which of the objects on your list are symbols?</h5>
+            <p>Gun, Alcohol, The bar, The man being shot, The man drink</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>6. What do you think each symbol means?</h5>
+            <p><strong>Gun:</strong> symbolizes violence and sudden death<br><strong>Alcohol:</strong> symbolizes addiction and self destruction<br><strong>The bar:</strong> symbolizes the alcohol industry<br><strong>The man being shot:</strong> instant death<br><strong>The man drink:</strong> slow death by alcoholism</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>7. Which words or phrases in the cartoon appear to be the most significant? Why do you think so?</h5>
+            <p>"Deliver and Die" and "Deliver or Die" are the most significant phrases because they express the claim that alcohol is just as bad as getting shot, and both will lead to death.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>8. List adjectives that describe the emotions portrayed in the cartoon.</h5>
+            <p>Violent, Tense, Dark, Fearful</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>A. Describe the action taking place in the cartoon.</h5>
+            <p>On the left, man is being held at gun point and seen in a violent situation. On the right, man is buying a drink of alcohol at a bar.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>B. Explain how the words in the cartoon clarify the symbols.</h5>
+            <p>"Deliver and Die" and "Deliver or Die" show that the left side shows instant death and on the right it represents eventual death by alcohol.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>C. Explain the message of the cartoon.</h5>
+            <p>The message of the cartoon is that alcohol is deadly and harmful, which slowly kills you.</p>
+          </div>
+          <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
+            <h5>D. What special interest groups would agree/disagree with the cartoon's message? Why?</h5>
+            <p><strong>Agree:</strong> The Temperance movement and religious groups would support the cartoon since they believed alcohol caused violence and poverty.<br><strong>Disagree:</strong> Alcohol companies and bar owners would disagree since they are the ones who profit from the alcohol selling.</p>
           </div>
         </div>
       </div>
@@ -1245,36 +1273,40 @@
   <div id="instagram" class="section">
     <div class="section-headline">Instagram Profile</div>
     <div class="ornamental-rule">✦ ✦ ✦</div>
-    <p class="section-deck">@cold_water_crusade — If the WCTU had Instagram in 1874</p>
+    <p class="section-deck">Click on the posts to view details</p>
 
     <div class="insta-phone">
       <div class="phone-notch"></div>
       <div class="insta-screen">
 
         <div class="insta-topbar">
-          <span style="font-size:1.1rem;">←</span>
+          <span style="font-size:1.1rem;">Back</span>
           <span class="insta-username-bar">cold_water_crusade</span>
-          <span style="font-size:1.1rem;">⋮</span>
+          <span style="font-size:1.1rem;">Menu</span>
         </div>
 
         <div class="insta-profile-header">
           <div class="insta-profile-row">
             <div class="insta-avatar">
-              <div class="insta-avatar-inner">🎀</div>
+              <div class="insta-avatar-inner"><img src="BaseballCards/WomensUnion.png" alt="WCTU" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>
             </div>
             <div class="insta-stats">
-              <div class="insta-stat"><strong>9</strong><span>posts</span></div>
-              <div class="insta-stat"><strong>245K</strong><span>followers</span></div>
-              <div class="insta-stat"><strong>47</strong><span>following</span></div>
+              <div class="insta-stat"><strong>3</strong><span>posts</span></div>
+              <div class="insta-stat"><strong>240K</strong><span>followers</span></div>
+              <div class="insta-stat"><strong>68</strong><span>following</span></div>
             </div>
           </div>
-          <div class="insta-name">Women's Christian Temperance Union 🎀</div>
+          <div class="insta-name">Women&apos;s Christian Temperance Union</div>
           <div class="insta-bio">
-            ✝️ Protecting the American home since 1874<br>
-            🪓 Fighting King Alcohol one saloon at a time<br>
-            📜 Advocating for: Prohibition · Women's Suffrage · Labor Reform<br>
-            🌹 Motto: <em>"Do Everything"</em> — Frances Willard<br>
-            <em>#HomeProtection #ColdWaterPledge #TotalAbstinence</em>
+            Temperance reform movement in action, featuring key members and progress updates. <br>
+            Joint petition for national prohibition and women’s rights. <br>
+            Associates:
+            <ul class="associate-list">
+              <li><img src="BaseballCards/CarryNation.jpeg" alt="Carry Nation"><span>@carry_nation (radical enforcer)</span></li>
+              <li><img src="BaseballCards/FrancesWillard.jpeg" alt="Frances Willard"><span>@frances_willard (WCTU leader)</span></li>
+              <li><img src="BaseballCards/NealDow.jpeg" alt="Neal Dow"><span>@nealdow (Maine Law advocate)</span></li>
+            </ul>
+            <em>#DrinkLessLiveMore #NoSaloon #WCTU</em>
           </div>
           <button class="insta-follow-btn">Follow</button>
         </div>
@@ -1282,64 +1314,58 @@
         <!-- Posts grid -->
         <div class="insta-posts-grid">
           <!-- Post 1 -->
-          <div class="insta-post-thumb" onclick="togglePost('p1')">
-            <svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#c8a870"/>
-            <text x="60" y="55" text-anchor="middle" font-size="32">🚫</text>
-            <text x="60" y="80" text-anchor="middle" font-size="11" fill="#3a1a00">NO SALOONS</text></svg>
+          <div class="insta-post-thumb" onclick="togglePost('p1')" aria-label="WCTU Rally post">
+            <img src="Insta/thesmashersmail.avif" alt="WCTU Rally" />
+            <div class="insta-post-overlay">WCTU Rally - Join the march for sobriety</div>
           </div>
           <!-- Post 2 -->
-          <div class="insta-post-thumb" onclick="togglePost('p2')">
-            <svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#8b4513"/>
-            <text x="60" y="55" text-anchor="middle" font-size="32">🪓</text>
-            <text x="60" y="80" text-anchor="middle" font-size="9" fill="#f0e0c0">CARRY WAS HERE</text></svg>
+          <div class="insta-post-thumb" onclick="togglePost('p2')" aria-label="Carry Nation post">
+            <img src="Insta/votedry.jpg" alt="Carry Nation" />
+            <div class="insta-post-overlay">Carry Nation - Street campaign and petition drive</div>
           </div>
           <!-- Post 3 -->
-          <div class="insta-post-thumb" onclick="togglePost('p3')">
-            <svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#556b2f"/>
-            <text x="60" y="55" text-anchor="middle" font-size="32">📜</text>
-            <text x="60" y="78" text-anchor="middle" font-size="9" fill="#f0e0c0">MAINE LAW 1851</text></svg>
+          <div class="insta-post-thumb" onclick="togglePost('p3')" aria-label="Maine Law post">
+            <img src="Insta/mainelaw.jpg" alt="Maine Law" />
+            <div class="insta-post-overlay">Maine Law - 1851 victory for intent to national prohibition</div>
           </div>
-          <!-- Filler posts -->
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#d4b896"/><text x="60" y="65" text-anchor="middle" font-size="30">🙏</text></svg></div>
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#8b1a1a"/><text x="60" y="65" text-anchor="middle" font-size="30">🎀</text></svg></div>
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#2a4a2a"/><text x="60" y="65" text-anchor="middle" font-size="30">✊</text></svg></div>
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#4a3a1a"/><text x="60" y="65" text-anchor="middle" font-size="30">⛪</text></svg></div>
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#1a3a4a"/><text x="60" y="65" text-anchor="middle" font-size="30">🗳️</text></svg></div>
-          <div class="insta-post-thumb"><svg viewBox="0 0 120 120"><rect width="120" height="120" fill="#3a1a4a"/><text x="60" y="65" text-anchor="middle" font-size="30">🌹</text></svg></div>
-        </div>
+          </div>
 
         <!-- Post detail panels -->
         <div class="insta-post-detail" id="p1">
           <div class="insta-post-header">
-            <div class="insta-mini-avatar">🎀</div>
-            <strong style="font-size:0.8rem;">cold_water_crusade</strong>
+            <div class="insta-mini-avatar"><img src="BaseballCards/WomensUnion.png" alt="WCTU" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>
+            <strong style="font-size:0.8rem;">Women&apos;s Christian Temperance Union</strong>
           </div>
+          <img src="Insta/votedry.jpg" alt="WCTU Rally" style="width:100%; max-height:280px; object-fit:cover; margin-top:10px; border:2px solid #2a1a08;" />
           <div class="insta-post-caption">
-            <strong>cold_water_crusade</strong> The saloon is the ENEMY of the American family. Every dollar spent on whiskey is a dollar stolen from your children's bread. Sisters — we march on Washington! 📢 Join us. Take the Pledge. ✝️
+            <strong>Women&apos;s Christian Temperance Union</strong><br> Rally tonight at 7PM at the town hall. 3 associates are speaking: @carry_nation @frances_willard @nealdow.<br>
+            End the saloon culture.
           </div>
-          <div class="insta-hashtags">#HomeProtection #CloseSaloons #TotalAbstinence #WCTU #WomensRights</div>
+          <div class="insta-hashtags">#DrinkLessLiveMore #NoSaloon #WCTU</div>
         </div>
 
         <div class="insta-post-detail" id="p2">
           <div class="insta-post-header">
-            <div class="insta-mini-avatar">🪓</div>
-            <strong style="font-size:0.8rem;">cold_water_crusade</strong>
+            <div class="insta-mini-avatar"><img src="BaseballCards/WomensUnion.png" alt="WCTU" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>
+            <strong style="font-size:0.8rem;">Women&apos;s Christian Temperance Union</strong>
           </div>
+          <img src="Insta/thesmashersmail.avif" alt="Carry Nation" style="width:100%; max-height:280px; object-fit:cover; margin-top:10px; border:2px solid #2a1a08;" />
           <div class="insta-post-caption">
-            <strong>cold_water_crusade</strong> Our sister Carry Nation paid her bail with souvenir hatchets and walked straight back in. 🪓 They can jail the woman but they CANNOT jail the Cause. Kansas will be dry before the year is out. 💪
+            <strong>Women&apos;s Christian Temperance Union</strong><br> Associate highlight: @carry_nation is leading the street campaign today. Keep the momentum going, petitions now at City Hall.
           </div>
-          <div class="insta-hashtags">#CarryNation #Hatchetation #KansasProhibition #NoSurrender #TemperanceCrusade</div>
+          <div class="insta-hashtags">#CarryNation #Hatchetation #TemperanceAction</div>
         </div>
 
         <div class="insta-post-detail" id="p3">
           <div class="insta-post-header">
-            <div class="insta-mini-avatar">📜</div>
-            <strong style="font-size:0.8rem;">cold_water_crusade</strong>
+            <div class="insta-mini-avatar"><img src="BaseballCards/WomensUnion.png" alt="WCTU" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" /></div>
+            <strong style="font-size:0.8rem;">Women&apos;s Christian Temperance Union</strong>
           </div>
+          <img src="Insta/mainelaw.jpg" alt="Maine Law" style="width:100%; max-height:280px; object-fit:cover; margin-top:10px; border:2px solid #2a1a08;" />
           <div class="insta-post-caption">
-            <strong>cold_water_crusade</strong> Maine did it in 1851. Twelve states followed. The 18th Amendment is coming — mark our words. What one state can do, a NATION can do. Sign the petition. 🖊️ Link in bio.
+            <strong>Women&apos;s Christian Temperance Union</strong><br> Historic milestone: Maine Law anniversary! We are building toward a national vote for prohibition. Share this report with your community.
           </div>
-          <div class="insta-hashtags">#MaineLaw1851 #ProhibitionNow #18thAmendment #TemperanceWins #NealDow</div>
+          <div class="insta-hashtags">#MaineLaw #ProhibitionNow #RightsForWomen</div>
         </div>
 
       </div>
@@ -1475,7 +1501,8 @@
 
   <!-- FOOTER -->
   <div class="footer">
-    The Cold Water Gazette · Temperance Reform Project · U.S. History · Vol. XIV
+    The Cold Water Gazette · Temperance Reform Project · U.S. History · Vol. XIV<br>
+    Built by Yevgen Borenko and Alex Quispe
   </div>
 
 </div><!-- /newspaper -->
@@ -1497,147 +1524,6 @@ function togglePost(id) {
   if (!isOpen) el.classList.add('open');
 }
 
-// ========== CROSSWORD ==========
-const WORDS = [
-  // { word, clue, row, col, dir }
-  { word: 'TEMPERANCE',  clue: 'Moderation or abstinence from alcohol; the name of this entire reform movement',         row: 0,  col: 0,  dir: 'across' },
-  { word: 'PLEDGE',      clue: 'Written vow reformers asked Americans to sign, promising to give up strong drink',        row: 2,  col: 3,  dir: 'across' },
-  { word: 'WILLARD',     clue: 'WCTU president whose motto was "Do Everything"; first woman in Capitol Statuary Hall',    row: 4,  col: 1,  dir: 'across' },
-  { word: 'SALOON',      clue: 'Public drinking establishment; symbol of moral corruption to Temperance reformers',      row: 6,  col: 4,  dir: 'across' },
-  { word: 'HATCHET',     clue: 'Weapon Carry Nation used to smash saloon interiors; she sold souvenir versions',         row: 8,  col: 2,  dir: 'across' },
-  { word: 'MAINE',       clue: 'State that passed the first statewide prohibition law in 1851 under Mayor Neal Dow',     row: 10, col: 5,  dir: 'across' },
-  { word: 'WCTU',        clue: 'Initials of the women\'s organization Frances Willard led; founded 1874 in Cleveland',   row: 0,  col: 6,  dir: 'down'   },
-  { word: 'NATION',      clue: 'Carry ___: radical temperance activist famous for smashing saloons with an axe',         row: 2,  col: 0,  dir: 'down'   },
-  { word: 'BEECHER',     clue: 'Rev. Lyman ___: preacher who founded the American Temperance Society in 1826',           row: 1,  col: 9,  dir: 'down'   },
-  { word: 'PROHIBITION', clue: 'Legal ban on manufacturing and selling alcohol; achieved nationally by 18th Amendment',  row: 4,  col: 5,  dir: 'down'   },
-  { word: 'VOLSTEAD',    clue: '___ Act: 1919 law that enforced the 18th Amendment\'s prohibition',                       row: 0,  col: 4,  dir: 'down'   },
-  { word: 'CRUSADE',     clue: 'The Women\'s ___: 1873–74 movement of women praying at saloon doorsteps in Ohio',        row: 6,  col: 8,  dir: 'down'   },
-];
-
-const ROWS = 13, COLS = 14;
-let grid = Array.from({length: ROWS}, () => Array(COLS).fill(null));
-let answers = Array.from({length: ROWS}, () => Array(COLS).fill(''));
-let cellNums = Array.from({length: ROWS}, () => Array(COLS).fill(0));
-
-// Place words
-WORDS.forEach(w => {
-  for (let i = 0; i < w.word.length; i++) {
-    const r = w.dir === 'across' ? w.row : w.row + i;
-    const c = w.dir === 'across' ? w.col + i : w.col;
-    if (r < ROWS && c < COLS) answers[r][c] = w.word[i];
-  }
-});
-
-// Number cells
-let numCount = 1;
-WORDS.forEach(w => {
-  if (!cellNums[w.row][w.col]) cellNums[w.row][w.col] = numCount++;
-});
-
-function buildCrossword() {
-  const table = document.getElementById('cwGrid');
-  table.innerHTML = '';
-  for (let r = 0; r < ROWS; r++) {
-    const tr = document.createElement('tr');
-    for (let c = 0; c < COLS; c++) {
-      const td = document.createElement('td');
-      if (answers[r][c]) {
-        const inp = document.createElement('input');
-        inp.maxLength = 1;
-        inp.dataset.r = r; inp.dataset.c = c;
-        inp.addEventListener('input', e => {
-          e.target.value = e.target.value.toUpperCase().slice(-1);
-          // Auto-advance
-          const nc = parseInt(e.target.dataset.c) + 1;
-          const nextInput = table.querySelector(`input[data-r="${r}"][data-c="${nc}"]`);
-          if (nextInput) nextInput.focus();
-        });
-        inp.addEventListener('keydown', e => {
-          if (e.key === 'Backspace' && !e.target.value) {
-            const pc = parseInt(e.target.dataset.c) - 1;
-            const prev = table.querySelector(`input[data-r="${r}"][data-c="${pc}"]`);
-            if (prev) { prev.focus(); prev.value = ''; }
-          }
-        });
-        if (cellNums[r][c]) {
-          const num = document.createElement('span');
-          num.className = 'cw-num';
-          num.textContent = cellNums[r][c];
-          td.appendChild(num);
-        }
-        td.appendChild(inp);
-      } else {
-        td.classList.add('blocked');
-      }
-      tr.appendChild(td);
-    }
-    table.appendChild(tr);
-  }
-}
-
-function buildClues() {
-  const across = document.getElementById('acrossClues');
-  const down   = document.getElementById('downClues');
-  across.innerHTML = ''; down.innerHTML = '';
-
-  // Map word to its number
-  const numMap = {};
-  WORDS.forEach(w => { numMap[w.word] = cellNums[w.row][w.col]; });
-
-  WORDS.filter(w => w.dir === 'across').sort((a,b) => numMap[a.word]-numMap[b.word]).forEach(w => {
-    const li = document.createElement('li');
-    li.innerHTML = `<span>${numMap[w.word]}.</span><span>${w.clue}</span>`;
-    across.appendChild(li);
-  });
-  WORDS.filter(w => w.dir === 'down').sort((a,b) => numMap[a.word]-numMap[b.word]).forEach(w => {
-    const li = document.createElement('li');
-    li.innerHTML = `<span>${numMap[w.word]}.</span><span>${w.clue}</span>`;
-    down.appendChild(li);
-  });
-}
-
-function checkCrossword() {
-  const table = document.getElementById('cwGrid');
-  let correct = 0, total = 0;
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (answers[r][c]) {
-        total++;
-        const inp = table.querySelector(`input[data-r="${r}"][data-c="${c}"]`);
-        const td = inp.parentElement;
-        td.classList.remove('correct','wrong');
-        if (inp.value === answers[r][c]) { td.classList.add('correct'); correct++; }
-        else if (inp.value) { td.classList.add('wrong'); }
-      }
-    }
-  }
-  document.getElementById('cwScore').textContent = `${correct} of ${total} letters correct.`;
-}
-
-function revealCrossword() {
-  const table = document.getElementById('cwGrid');
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (answers[r][c]) {
-        const inp = table.querySelector(`input[data-r="${r}"][data-c="${c}"]`);
-        if (inp) { inp.value = answers[r][c]; inp.parentElement.classList.add('correct'); inp.parentElement.classList.remove('wrong'); }
-      }
-    }
-  }
-  document.getElementById('cwScore').textContent = 'All answers revealed.';
-}
-
-function resetCrossword() {
-  const table = document.getElementById('cwGrid');
-  document.querySelectorAll('#cwGrid input').forEach(inp => {
-    inp.value = '';
-    inp.parentElement.classList.remove('correct','wrong');
-  });
-  document.getElementById('cwScore').textContent = '';
-}
-
-buildCrossword();
-buildClues();
 </script>
 </body>
 </html>
