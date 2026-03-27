@@ -669,26 +669,37 @@
 
   /* ========== PROPAGANDA POSTERS ========== */
   #posters .posters-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 32px; margin-top: 28px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px; margin-top: 22px;
+    align-items: start;
   }
   @media(max-width:700px){ #posters .posters-grid { grid-template-columns: 1fr; } }
 
-  .poster-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .poster-wrap {
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 420px; margin: 0 auto;
+  }
 
   .poster-frame {
-    border: 6px solid var(--rule);
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
+    border: none;
+    box-shadow: none;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3/4;
+    width: 100%;
+    background: transparent;
+  }
+
+  .poster-frame img {
+    width: 100%; height: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .poster-svg { width: 100%; height: 100%; display: block; }
 
   .poster-label {
     font-family: 'IM Fell English SC', serif;
-    font-size: 0.65rem;
+    font-size: 0.95rem;
     letter-spacing: 0.2em;
     color: var(--red-ink);
     text-transform: uppercase;
@@ -698,12 +709,19 @@
   .poster-analysis {
     background: var(--aged);
     border: 1px solid var(--rule);
-    border-left: 4px solid var(--red-ink);
     padding: 12px 14px;
     font-family: 'IM Fell English', serif;
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     line-height: 1.7;
     font-style: italic;
+  }
+  .poster-analysis h4 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    font-family: 'IM Fell English SC', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
   }
 
   .poster-analysis strong {
@@ -810,6 +828,159 @@
     padding-top: 2px;
   }
 
+  /* INTRO MODAL */
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 15, 15, 0.82);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  #intro-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #intro-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #intro-card {
+    background: #faf0d8;
+    color: #1a1008;
+    border: 2px solid #2a1a08;
+    border-radius: 10px;
+    padding: 24px 20px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  #intro-card h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  #intro-card p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+
+  #intro-button {
+    background: #8b1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-family: 'IM Fell English SC', serif;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  #intro-button:hover {
+    background: #a32020;
+  }
+
+  .show-answers-button {
+    display: block;
+    margin: 16px auto 18px auto;
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--rule);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'IM Fell English SC', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .show-answers-button:hover {
+    background: var(--red-ink);
+    color: var(--paper);
+  }
+
+  #answer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 15, 15, 0.82);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
+  #answer-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #answer-card {
+    background: #faf0d8;
+    color: #1a1008;
+    border: 2px solid #2a1a08;
+    border-radius: 14px;
+    padding: 20px;
+    max-width: min(90vw, 760px);
+    width: 100%;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  #answer-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+
+  #answer-card .modal-footer {
+    text-align: right;
+  }
+
+  #answer-close {
+    background: var(--ink);
+    color: var(--paper);
+    border: 2px solid var(--rule);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'IM Fell English SC', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  #answer-close:hover {
+    background: var(--red-ink);
+  }
+
+  .section.hidden {
+    display: none !important;
+  }
+
   @media(max-width:680px){
     #home .front-columns { grid-template-columns: 1fr; }
     .col-divider { height: 2px; width: 100%; }
@@ -819,6 +990,24 @@
 </style>
 </head>
 <body>
+
+<div id="intro-overlay">
+  <div id="intro-card">
+    <h1>Advanced US History Reformer Project</h1>
+    <p>By Yevgen Borenko and Alex Quispe</p>
+    <button id="intro-button" onclick="closeIntro()">Continue</button>
+  </div>
+</div>
+
+<div id="answer-overlay" onclick="closeCrosswordAnswers()">
+  <div id="answer-card" onclick="event.stopPropagation()">
+    <h2>Crossword Answers</h2>
+    <img src="CrosswordAnswers.png" alt="Crossword Answers">
+    <div class="modal-footer">
+      <button id="answer-close" onclick="closeCrosswordAnswers()">Close</button>
+    </div>
+  </div>
+</div>
 
 <div class="newspaper">
 
@@ -835,8 +1024,7 @@
 
   <!-- NAVIGATION -->
   <nav class="nav-bar">
-    <button class="active" onclick="showSection('home',this)">Front Page</button>
-    <button onclick="showSection('cards',this)">⬡ Player Cards</button>
+    <button id="nav-cards" class="active" onclick="showSection('cards',this)">⬡ Player Cards</button>
     <button onclick="showSection('crossword',this)">✦ Crossword</button>
     <button onclick="showSection('cartoon',this)">◈ Cartoon Analysis</button>
     <button onclick="showSection('instagram',this)">☎ Instagram</button>
@@ -844,7 +1032,7 @@
   </nav>
 
   <!-- ===================== HOME ===================== -->
-  <div id="home" class="section active">
+  <div id="home" class="section hidden">
     <div class="banner-headline">A History of the Temperance Movement</div>
 
     <div class="ornamental-rule">✦ ✦ ✦</div>
@@ -871,10 +1059,10 @@
   </div>
 
   <!-- ===================== BASEBALL CARDS ===================== -->
-  <div id="cards" class="section">
+  <div id="cards" class="section active">
     <div class="section-headline">Reformer Baseball Cards</div>
     <div class="ornamental-rule">✦ ✦ ✦</div>
-    <p class="section-deck">Ten key figures of the Temperance crusade — hover each card to reveal their stats</p>
+    <p class="section-deck">Ten key figures of the Temperance crusade, hover over each card to reveal their stats</p>
 
     <div class="cards-grid">
 
@@ -1135,10 +1323,11 @@
   <div id="crossword" class="section">
     <div class="section-headline">The Temperance Crossword</div>
     <div class="ornamental-rule">✦ ✦ ✦</div>
-    <p class="section-deck">Test your knowledge — twelve terms from the cold water crusade</p>
+    <p class="section-deck">Twelve term crossword</p>
+    <button class="show-answers-button" onclick="openCrosswordAnswers()">Show Answers</button>
 
     <div class="crossword-wrap">
-      <iframe style="border:3px solid black; aspect-ratio: 1; min-height: 500px;" frameborder="0" src="https://crosswordlabs.com/embed/temperance-crossword-10"></iframe>
+      <iframe width="500" height="500" style="border:3px solid black; margin:auto; display:block" frameborder="0" src="https://crosswordlabs.com/embed/temperance-crossword-10"></iframe>
     </div>
   </div>
 
@@ -1146,7 +1335,7 @@
   <div id="cartoon" class="section">
     <div class="section-headline">Political Cartoon Analysis</div>
     <div class="ornamental-rule">✦ ✦ ✦</div>
-    <p class="section-deck">Two period cartoons examined for symbols, bias, and persuasive intent</p>
+    <p class="section-deck">Two period cartoons</p>
 
     <div class="cartoon-grid">
 
@@ -1214,7 +1403,7 @@
           <img src="Cartoons/politicalcartoon1.jpg" style="width: 100%; height: 100%; object-fit: contain;" alt="Cartoon 2">
         </div>
         <div class="cartoon-body">
-          <div class="cartoon-title">Cartoon II - "Which is Worst" - Analysis</div>
+          <div class="cartoon-title">Cartoon II - Analysis</div>
           <div class="analysis-box" style="margin-bottom: 12px; background: var(--aged);">
             <h5>1. List the objects or people you see in the cartoon.</h5>
             <p>In the left panel of the cartoon we see a robber point a gun at a man that is kneeling down. At the right panel we see a man at the bar and the bartender is giving him a drink.</p>
@@ -1315,12 +1504,12 @@
         <div class="insta-posts-grid">
           <!-- Post 1 -->
           <div class="insta-post-thumb" onclick="togglePost('p1')" aria-label="WCTU Rally post">
-            <img src="Insta/thesmashersmail.avif" alt="WCTU Rally" />
+            <img src="Insta/votedry.jpg" alt="WCTU Rally" />
             <div class="insta-post-overlay">WCTU Rally - Join the march for sobriety</div>
           </div>
           <!-- Post 2 -->
           <div class="insta-post-thumb" onclick="togglePost('p2')" aria-label="Carry Nation post">
-            <img src="Insta/votedry.jpg" alt="Carry Nation" />
+            <img src="Insta/thesmashersmail.avif" alt="Carry Nation" />
             <div class="insta-post-overlay">Carry Nation - Street campaign and petition drive</div>
           </div>
           <!-- Post 3 -->
@@ -1374,128 +1563,27 @@
 
   <!-- ===================== PROPAGANDA POSTERS ===================== -->
   <div id="posters" class="section">
-    <div class="section-headline">Original Propaganda Posters</div>
+    <div class="section-headline">Propaganda Posters</div>
     <div class="ornamental-rule">✦ ✦ ✦</div>
-    <p class="section-deck">One promoting the movement — one opposing it</p>
+    <p class="section-deck">One for and one against Temperance</p>
 
     <div class="posters-grid">
-
-      <!-- POSTER 1: PRO-TEMPERANCE -->
       <div class="poster-wrap">
-        <div class="poster-label">✦ Poster I — Pro-Temperance ✦</div>
+        <div class="poster-label">✦ Poster 1 ✦</div>
         <div class="poster-frame">
-          <svg class="poster-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background: Deep navy -->
-            <rect width="300" height="400" fill="#1a2a1a"/>
-            <!-- Stars / decorative top -->
-            <text x="150" y="28" text-anchor="middle" font-size="11" fill="#c8a030" letter-spacing="6">✦ ✦ ✦ ✦ ✦</text>
-            <!-- TITLE -->
-            <text x="150" y="60" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="22" fill="#f0e0c0" letter-spacing="2">PROTECT</text>
-            <text x="150" y="84" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="18" fill="#f0e0c0" letter-spacing="1">YOUR HOME</text>
-            <!-- Red rule -->
-            <rect x="30" y="92" width="240" height="3" fill="#8b1a1a"/>
-            <!-- Central image: happy home vs saloon -->
-            <!-- House (bright, protected) -->
-            <polygon points="60,160 140,110 220,160" fill="#c8a030" stroke="#f0e0c0" stroke-width="2"/>
-            <rect x="75" y="160" width="130" height="80" fill="#f0e0c0" stroke="#c8a030" stroke-width="2"/>
-            <!-- Door -->
-            <rect x="120" y="200" width="35" height="40" fill="#8b4513" rx="2"/>
-            <!-- Windows -->
-            <rect x="83" y="170" width="28" height="24" fill="#b8d4e8" stroke="#c8a030" stroke-width="1"/>
-            <rect x="164" y="170" width="28" height="24" fill="#b8d4e8" stroke="#c8a030" stroke-width="1"/>
-            <!-- Warmth rays -->
-            <circle cx="137" cy="180" r="4" fill="#c8a030" opacity="0.6"/>
-            <!-- Family silhouettes -->
-            <circle cx="108" cy="258" r="10" fill="#5a3a1a"/>
-            <rect x="100" y="268" width="16" height="25" fill="#5a3a1a" rx="2"/>
-            <circle cx="160" cy="255" r="12" fill="#5a3a1a"/>
-            <rect x="150" y="267" width="20" height="28" fill="#5a3a1a" rx="2"/>
-            <circle cx="195" cy="260" r="9" fill="#5a3a1a"/>
-            <rect x="188" y="269" width="14" height="22" fill="#5a3a1a" rx="2"/>
-            <!-- Big X over a bottle on left -->
-            <rect x="22" y="170" width="25" height="65" fill="#6b8b3a" rx="8" stroke="#3a5a10" stroke-width="1.5" opacity="0.7"/>
-            <rect x="27" y="158" width="15" height="20" fill="#6b8b3a" rx="4" opacity="0.7"/>
-            <line x1="14" y1="155" x2="55" y2="245" stroke="#8b1a1a" stroke-width="5" stroke-linecap="round"/>
-            <line x1="55" y1="155" x2="14" y2="245" stroke="#8b1a1a" stroke-width="5" stroke-linecap="round"/>
-            <!-- Catchphrase -->
-            <rect x="20" y="305" width="260" height="50" fill="#8b1a1a"/>
-            <text x="150" y="325" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#f0e0c0">"The Hand That Rocks the Cradle</text>
-            <text x="150" y="342" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#f0e0c0">Shall Rock the Nation Sober"</text>
-            <!-- Bottom ornament -->
-            <text x="150" y="375" text-anchor="middle" font-size="9" fill="#c8a030" letter-spacing="4">W · C · T · U · 1874</text>
-            <!-- Border -->
-            <rect x="4" y="4" width="292" height="392" fill="none" stroke="#c8a030" stroke-width="3"/>
-            <rect x="8" y="8" width="284" height="384" fill="none" stroke="#c8a030" stroke-width="1"/>
-          </svg>
-        </div>
-        <div class="poster-analysis">
-          <strong>Effectiveness Analysis</strong>
-          This poster creates support for temperance by centering the <em>family home</em> as the value under threat. The warm golden house and family silhouettes appeal to Protestant ideals of domestic virtue, while the crossed-out bottle signals that rejection of alcohol = protection of everything sacred. The red banner catchphrase — riffing on a familiar proverb — elevates women from passive victims to active defenders of national morality, which was both rhetorically empowering and politically strategic for the WCTU, which linked temperance reform directly to women's suffrage.
+          <img src="Posters/Poster1.png" alt="Poster 1" loading="lazy" width="600" height="800" />
         </div>
       </div>
-
-      <!-- POSTER 2: ANTI-TEMPERANCE / OPPOSITION -->
       <div class="poster-wrap">
-        <div class="poster-label">✦ Poster II — Anti-Prohibition Opposition ✦</div>
+        <div class="poster-label">✦ Poster 2 ✦</div>
         <div class="poster-frame">
-          <svg class="poster-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background: warm amber/tavern -->
-            <rect width="300" height="400" fill="#3a2010"/>
-            <!-- Decorative top -->
-            <text x="150" y="28" text-anchor="middle" font-size="11" fill="#c8a030" letter-spacing="6">★ ★ ★ ★ ★</text>
-            <!-- TITLE -->
-            <text x="150" y="58" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="19" fill="#f5c842" letter-spacing="1">LIBERTY!</text>
-            <text x="150" y="80" text-anchor="middle" font-family="Georgia" font-size="12" fill="#e0c090" letter-spacing="1">GOVERNMENT OUT OF OUR GLASS</text>
-            <rect x="30" y="88" width="240" height="2" fill="#c8a030"/>
-            <!-- Central: Liberty figure -->
-            <!-- Body -->
-            <ellipse cx="150" cy="190" rx="35" ry="50" fill="#8b6914"/>
-            <!-- Head -->
-            <circle cx="150" cy="130" r="24" fill="#f5c090" stroke="#8b6914" stroke-width="1.5"/>
-            <!-- Liberty crown -->
-            <polygon points="126,118 132,100 138,115" fill="#c8a030"/>
-            <polygon points="144,115 150,96 156,115" fill="#c8a030"/>
-            <polygon points="162,115 168,100 174,118" fill="#c8a030"/>
-            <rect x="124" y="116" width="52" height="8" fill="#c8a030"/>
-            <!-- Face -->
-            <text x="150" y="138" text-anchor="middle" font-size="16">🗽</text>
-            <!-- Torch arm raised -->
-            <line x1="185" y1="170" x2="220" y2="130" stroke="#f5c090" stroke-width="5" stroke-linecap="round"/>
-            <polygon points="212,108 218,118 228,110 222,128 210,126" fill="#ff6b00"/>
-            <polygon points="215,112 220,120 225,112 222,126 212,124" fill="#ffd700"/>
-            <!-- Mug arm -->
-            <line x1="115" y1="170" x2="82" y2="155" stroke="#f5c090" stroke-width="5" stroke-linecap="round"/>
-            <rect x="62" y="143" width="28" height="28" fill="#c8a030" rx="4" stroke="#8b6914" stroke-width="2"/>
-            <rect x="88" y="150" width="10" height="14" fill="none" stroke="#c8a030" stroke-width="2" rx="3"/>
-            <!-- Foam on mug -->
-            <ellipse cx="76" cy="144" rx="14" ry="6" fill="#f0f0f0"/>
-            <!-- Base / pillar -->
-            <rect x="130" y="238" width="40" height="15" fill="#5a3a1a" rx="2"/>
-            <rect x="120" y="250" width="60" height="10" fill="#4a2a10" rx="1"/>
-            <!-- Inscription on base -->
-            <text x="150" y="260" text-anchor="middle" font-size="7" fill="#c8a030" font-family="Georgia">PERSONAL FREEDOM</text>
-            <!-- Chains BROKEN at her feet -->
-            <text x="110" y="285" font-size="14">⛓️💥</text>
-            <!-- The chains are labeled "PROHIBITION LAW" -->
-            <text x="150" y="295" text-anchor="middle" font-size="7" fill="#a05020" font-style="italic">"PROHIBITION LAW" — shattered</text>
-            <!-- Catchphrase banner -->
-            <rect x="20" y="308" width="260" height="52" fill="#6b3a10"/>
-            <rect x="22" y="310" width="256" height="48" fill="none" stroke="#c8a030" stroke-width="1"/>
-            <text x="150" y="328" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#f5c842">"The Free Man's Right to His Own</text>
-            <text x="150" y="344" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#f5c842">Cup Shall Not Be Legislated Away"</text>
-            <!-- Bottom -->
-            <text x="150" y="376" text-anchor="middle" font-size="8" fill="#c8a030" letter-spacing="3">PERSONAL LIBERTY LEAGUE · 1855</text>
-            <!-- Border -->
-            <rect x="4" y="4" width="292" height="392" fill="none" stroke="#c8a030" stroke-width="3"/>
-            <rect x="8" y="8" width="284" height="384" fill="none" stroke="#8b6914" stroke-width="1"/>
-          </svg>
+          <img src="Posters/Poster2.png" alt="Poster 2" loading="lazy" width="600" height="800" />
         </div>
         <div class="poster-analysis">
-          <strong>Effectiveness Analysis</strong>
-          The opposition poster counters temperance by invoking <em>liberty</em> — the foundational American value — as the frame for resistance. A Lady Liberty figure holding a beer mug and breaking chains labeled "Prohibition Law" repositions anti-temperance not as defending vice, but as <em>defending constitutional freedom</em>. This was the core rhetorical strategy of "Personal Liberty" leagues, particularly among German and Irish immigrant communities who resisted nativist Protestant morality being imposed through law. The warm amber palette and triumphant composition create a sense of celebration rather than sin, making drinking appear natural and resistance to prohibition patriotic.
+          <h4>Analysis</h4>
+          The poster appeals to a viewer’s fear of control. It depicts temperance as a cage, and the only way to open it, your freedom, has been broken. A viewer would be less likely to support/follow temperance if they saw this because the poster implies that following this movement is the same as giving up your freedom. The text “When they lock this away - What’s next” also opens the door to further intrusions if the viewer allows this one.
         </div>
       </div>
-
     </div>
   </div>
 
@@ -1523,6 +1611,82 @@ function togglePost(id) {
   document.querySelectorAll('.insta-post-detail').forEach(d => d.classList.remove('open'));
   if (!isOpen) el.classList.add('open');
 }
+
+function setBodyScrollLock(locked) {
+  document.body.style.overflow = locked ? 'hidden' : '';
+}
+
+function showIntroOverlay(show) {
+  const overlay = document.getElementById('intro-overlay');
+  if (!overlay) return;
+  if (show) {
+    overlay.classList.add('show');
+    overlay.classList.remove('hidden');
+    setBodyScrollLock(true);
+  } else {
+    overlay.classList.remove('show');
+    overlay.classList.add('hidden');
+    setBodyScrollLock(false);
+  }
+}
+
+function closeIntro() {
+  showIntroOverlay(false);
+  localStorage.setItem('introSeen', 'true');
+
+  // Ensure front page is hidden and baseball cards are active
+  const homeSection = document.getElementById('home');
+  if (homeSection) homeSection.classList.add('hidden');
+
+  const cardsSection = document.getElementById('cards');
+  if (cardsSection) {
+    cardsSection.classList.add('active');
+  }
+
+  const cardsButton = document.getElementById('nav-cards');
+  if (cardsButton) {
+    document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+    cardsButton.classList.add('active');
+  }
+}
+
+function openCrosswordAnswers() {
+  const overlay = document.getElementById('answer-overlay');
+  if (!overlay) return;
+  overlay.classList.add('show');
+  setBodyScrollLock(true);
+}
+
+function closeCrosswordAnswers() {
+  const overlay = document.getElementById('answer-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('show');
+  setBodyScrollLock(false);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const cardsSection = document.getElementById('cards');
+  if (cardsSection) {
+    cardsSection.classList.add('active');
+  }
+
+  const homeSection = document.getElementById('home');
+  if (homeSection) {
+    homeSection.classList.add('hidden');
+  }
+
+  const hasSeenIntro = localStorage.getItem('introSeen') === 'true';
+  showIntroOverlay(!hasSeenIntro);
+
+  if (hasSeenIntro) {
+    // Make sure the cards nav is active when coming back
+    const cardsButton = document.getElementById('nav-cards');
+    if (cardsButton) {
+      document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
+      cardsButton.classList.add('active');
+    }
+  }
+});
 
 </script>
 </body>
